@@ -1,6 +1,6 @@
 ## Configuring The Jetty 7 Webserver
 
-The `[jetty]` section in an `.ini` configuration file configures an embedded
+The `[webserver]` section in an `.ini` configuration file configures an embedded
 Jetty HTTP server inside trapperkeeper.
 
 ### `host`

@@ -1,9 +1,9 @@
-(ns puppetlabs.trapperkeeper.services.jetty.jetty-core-test
+(ns puppetlabs.trapperkeeper.services.webserver.jetty7-core-test
   (:require [clojure.test :refer :all]
             [ring.util.response :as rr]
             [clj-http.client :as http-client]
-            [puppetlabs.trapperkeeper.services.jetty.jetty-core :as jetty]
-            [puppetlabs.trapperkeeper.testutils.jetty :refer [with-test-jetty]]))
+            [puppetlabs.trapperkeeper.services.webserver.jetty7-core :as jetty]
+            [puppetlabs.trapperkeeper.testutils.webserver :refer [with-test-webserver]]))
 
 (deftest compression
   (testing "should return"
@@ -14,7 +14,7 @@
                      (rr/status 200)
                      (rr/content-type "text/plain")
                      (rr/charset "UTF-8")))]
-      (with-test-jetty app port
+      (with-test-webserver app port
         (testing "a gzipped response when requests"
           ;; The client/get function asks for compression by default
           (let [resp (http-client/get (format "http://localhost:%d/" port))]

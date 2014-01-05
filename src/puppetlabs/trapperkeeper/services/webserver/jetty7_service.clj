@@ -1,6 +1,6 @@
-(ns puppetlabs.trapperkeeper.services.jetty.jetty-service
+(ns puppetlabs.trapperkeeper.services.webserver.jetty7-service
   (:require
-    [puppetlabs.trapperkeeper.services.jetty.jetty-core :as core]
+    [puppetlabs.trapperkeeper.services.webserver.jetty7-core :as core]
     [puppetlabs.trapperkeeper.core :refer [defservice]]))
 
 (defservice webserver-service

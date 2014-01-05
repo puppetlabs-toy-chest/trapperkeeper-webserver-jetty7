@@ -1,9 +1,9 @@
-(ns puppetlabs.trapperkeeper.services.jetty.jetty-service-test
+(ns puppetlabs.trapperkeeper.services.webserver.jetty7-service_test
   (:import  [servlet SimpleServlet])
   (:require [clojure.test :refer :all]
             [clj-http.client :as http-client]
             [puppetlabs.trapperkeeper.internal :refer [get-service-fn]]
-            [puppetlabs.trapperkeeper.services.jetty.jetty-service :refer :all]
+            [puppetlabs.trapperkeeper.services.webserver.jetty7-service :refer :all]
             [puppetlabs.trapperkeeper.testutils.bootstrap :refer [bootstrap-services-with-empty-config
                                                                   bootstrap-services-with-cli-data]]
             [puppetlabs.kitchensink.testutils.fixtures :refer [with-no-jvm-shutdown-hooks]]))
