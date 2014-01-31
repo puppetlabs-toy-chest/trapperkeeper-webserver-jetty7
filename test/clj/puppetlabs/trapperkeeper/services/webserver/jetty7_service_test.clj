@@ -16,15 +16,12 @@
     (let [app              (bootstrap-services-with-cli-data [jetty7-service] {:config "./test-resources/config/jetty/jetty.ini"})
           s                (get-service app :WebserverService)
           add-ring-handler (partial add-ring-handler s)
-          join             (partial join s)
           shutdown         (partial stop s (service-context s))
           body             "Hello World"
           path             "/hello_world"
           ring-handler     (fn [req] {:status 200 :body body})]
       (try
         (add-ring-handler ring-handler path)
-        ;; Spin up jetty in a separate thread
-        (future (join))
         ;; host and port are defined in config file used above
         (let [response (http-client/get (format "http://localhost:8080/%s/" path))]
           (is (= (response :status) 200))
@@ -36,17 +33,52 @@
     (let [app                 (bootstrap-services-with-empty-config [jetty7-service])
           s                   (get-service app :WebserverService)
           add-servlet-handler (partial add-servlet-handler s)
-          join                (partial join s)
           shutdown            (partial stop s (service-context s))
           body                "Hey there"
           path                "/hey"
           servlet             (SimpleServlet. body)]
       (try
         (add-servlet-handler servlet path)
-        (future (join))
         (let [response (http-client/get (format "http://localhost:8080/%s" path))]
           (is (= (:status response) 200))
           (is (= (:body response) body)))
+        (finally
+          (shutdown)))))
+
+  (testing "servlet support with empty init param"
+    (let [app                 (bootstrap-services-with-empty-config [jetty7-service])
+          s                   (get-service app :WebserverService)
+          add-servlet-handler (partial add-servlet-handler s)
+          shutdown            (partial stop s (service-context s))
+          body                "Hey there"
+          path                "/hey"
+          servlet             (SimpleServlet. body)]
+      (try
+        (add-servlet-handler servlet path {})
+        (let [response (http-client/get (format "http://localhost:8080/%s" path))]
+          (is (= (:status response) 200))
+          (is (= (:body response) body)))
+        (finally
+          (shutdown)))))
+
+  (testing "servlet support with non-empty init params"
+    (let [app                 (bootstrap-services-with-empty-config [jetty7-service])
+          s                   (get-service app :WebserverService)
+          add-servlet-handler (partial add-servlet-handler s)
+          shutdown            (partial stop s (service-context s))
+          body                "Hey there"
+          path                "/hey"
+          init-param-one      "value of init param one"
+          init-param-two      "value of init param two"
+          servlet             (SimpleServlet. body)]
+      (try
+        (add-servlet-handler servlet path {"init-param-one" init-param-one "init-param-two" init-param-two})
+        (let [response (http-client/get (format "http://localhost:8080/%s/init-param-one" path))]
+          (is (= (:status response) 200))
+          (is (= (:body response) init-param-one)))
+        (let [response (http-client/get (format "http://localhost:8080/%s/init-param-two" path))]
+          (is (= (:status response) 200))
+          (is (= (:body response) init-param-two)))
         (finally
           (shutdown)))))
 
@@ -56,14 +88,12 @@
       (let [app               (bootstrap-services-with-cli-data [jetty7-service] {:config config})
             s                 (get-service app :WebserverService)
             add-ring-handler  (partial add-ring-handler s)
-            join              (partial join s)
             shutdown          (partial stop s (service-context s))
             body              "Hi World"
             path              "/hi_world"
             ring-handler      (fn [req] {:status 200 :body body})]
         (try
           (add-ring-handler ring-handler path)
-          (future (join))
           ;; NOTE that we're not entirely testing SSL here since we're not hitting https 8081
           ;; but this at least tests the initialization. Unfortunately when you are using a
           ;; self-signed certificate on the server it's really hard to do a client request
