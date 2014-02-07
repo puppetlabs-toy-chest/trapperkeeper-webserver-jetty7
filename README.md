@@ -129,6 +129,24 @@ For example, to host a servlet at `/my-app`:
 
 For more information see the [example servlet app](examples/servlet_app).
 
+#### `add-war-handler`
+
+`add-war-handler` takes two arguments: `[war-path ctxt-path]`.  The `war-path` is the path to
+a WAR file. The `ctxt-path` is the URL prefix at which the WAR will be registered.
+
+For example, to host a WAR at `/cas`:
+
+```clj
+(defservice cas-webservice
+  {:depends [[:webserver-service add-war-handler]
+             [:config-service get-in-config]]
+   :provides []}
+  (let [war-path (get-in-config [:cas :war-path])
+        context-path "/cas"]
+    (add-war-handler war-path context-path))
+  {})
+```
+
 #### `join`
 
 This function is not recommended for normal use, but is provided for compatibility

@@ -16,6 +16,7 @@
                  [org.eclipse.jetty/jetty-servlet "7.6.1.v20120215"]
                  [org.eclipse.jetty/jetty-server "7.6.1.v20120215"
                   :exclusions [org.eclipse.jetty.orbit/javax.servlet]]
+                 [org.eclipse.jetty/jetty-webapp "7.6.1.v20120215"]
 
                  [ring/ring-servlet "1.1.8"]]
 
