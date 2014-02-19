@@ -18,6 +18,8 @@
                   :exclusions [org.eclipse.jetty.orbit/javax.servlet]]
 
                  [ring/ring-servlet "1.1.8"]]
+                   
+  :plugins [[lein-release "1.0.5"]]
 
   :lein-release {:scm         :git
                  :deploy-via  :lein-deploy}
