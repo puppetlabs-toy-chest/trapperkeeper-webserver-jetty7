@@ -16,7 +16,7 @@
 
 (use-fixtures :once with-no-jvm-shutdown-hooks)
 
-(def test-resources-config-dir "./test-resources/config/jetty/")
+(def test-resources-config-dir "./dev-resources/config/jetty/")
 
 (def default-keystore-pass     "Kq8lG9LkISky9cDIYysiadxRx")
 
