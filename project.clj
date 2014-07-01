@@ -1,5 +1,5 @@
-(def tk-version "0.3.3")
-(def ks-version "0.5.2")
+(def tk-version "0.3.6")
+(def ks-version "0.5.3")
 
 (defproject puppetlabs/trapperkeeper-webserver-jetty7 "0.3.4-SNAPSHOT"
   :description "We are trapperkeeper.  We are one."
@@ -37,8 +37,7 @@
 
   :test-paths ["test/clj"]
 
-  :profiles {:dev {:test-paths ["test-resources"]
-                   :source-paths ["examples/ring_app/src"
+  :profiles {:dev {:source-paths ["examples/ring_app/src"
                                   "examples/servlet_app/src/clj"]
                    :java-source-paths ["examples/servlet_app/src/java"
                                        "test/java"]
