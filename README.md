@@ -1,5 +1,9 @@
 [![Build Status](https://travis-ci.org/puppetlabs/trapperkeeper-webserver-jetty7.png?branch=master)](https://travis-ci.org/puppetlabs/trapperkeeper-webserver-jetty7)
 
+## NOTE: This project is not actively maintained
+
+You are probably looking for the [Jetty 9 version of this service](https://github.com/puppetlabs/trapperkeeper-webserver-jetty9), which has many new features that have not been backported to this Jetty7 version. 
+
 ## Trapperkeeper Webserver Service
 
 This project provides a webserver service for use with the
@@ -139,4 +143,8 @@ trapperkeeper usage, because trapperkeeper already blocks the main thread and
 waits for a termination condition before allowing the process to exit.  However,
 if you do need this functionality for some reason, you can simply call `(join)`
 to cause your thread to wait for the Jetty server to shut down.
+
+## Support
+
+Please log tickets and issues at our [Jira Tracker](https://tickets.puppetlabs.com/issues/?jql=project%20%3D%20Trapperkeeper).
 
