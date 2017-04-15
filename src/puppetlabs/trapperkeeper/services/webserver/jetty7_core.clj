@@ -11,6 +11,7 @@
            (org.eclipse.jetty.server.ssl SslSelectChannelConnector)
            (org.eclipse.jetty.server.nio SelectChannelConnector)
            (org.eclipse.jetty.servlet ServletContextHandler ServletHolder)
+           (org.eclipse.jetty.webapp WebAppContext WebAppContext)
            (javax.servlet.http HttpServletRequest HttpServletResponse)
            (java.util.concurrent Executors)
            (javax.servlet Servlet))
@@ -199,6 +200,15 @@
      (.addHandler (:handlers webserver) handler)
      (.start handler)
      handler)))
+
+(defn add-war-handler
+  [webserver war-path ctxt-path]
+  (let [handler (doto (WebAppContext.)
+                  (.setContextPath ctxt-path)
+                  (.setWar war-path))]
+    (.addHandler (:handlers webserver) handler)
+    (.start handler)
+    handler))
 
 (defn join
   [webserver]

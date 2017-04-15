@@ -9,6 +9,7 @@
 (defprotocol WebserverService
   (add-ring-handler [this handler path])
   (add-servlet-handler [this servlet path] [this servlet path servlet-init-params])
+  (add-war-handler [this war-path ctxt-path])
   (join [this]))
 
 (defservice jetty7-service
@@ -45,6 +46,10 @@
   (add-servlet-handler [this servlet path servlet-init-context]
     (let [s ((service-context this) :jetty7-server)]
      (core/add-servlet-handler s servlet path servlet-init-context)))
+
+  (add-war-handler [this war-path ctxt-path]
+    (let [s ((service-context this) :jetty7-server)]
+      (core/add-war-handler s war-path ctxt-path)))
 
   (join [this]
     (let [s ((service-context this) :jetty7-server)]
